@@ -46,15 +46,15 @@
 
 ## 代码仓库 ⭐
 
-- [Gitee 代码仓库](https://gitee.com/alex-leesun/vibe-music-server) (请替换为你的实际仓库地址)
+- [GitHub 代码仓库](https://github.com/Alex-LiSun/vibe-music-server.git)
 
 ## 安装与启动 🚀
 
 1.  **克隆项目**
 
     ```bash
-    # Gitee (示例)
-    git clone https://gitee.com/alex-leesun/vibe-music-server.git
+    # GitHub (示例)
+    git clone https://github.com/Alex-LiSun/vibe-music-server.git
 
     cd vibe-music-server
     ```
@@ -135,7 +135,7 @@
 
 ## API 文档 接口
 
-本项目旨在为 [Vibe Music Client](https://gitee.com/alex-leesun/vibe-music-client) (用户端) 和 [Vibe Music Admin](https://gitee.com/alex-leesun/vibe-music-admin) (管理端) 提供后端支持。具体的 API 接口定义和使用方式，请参考项目源代码中的 Controller 层代码，或使用 API 文档工具 (如 Swagger，如果项目中集成了的话) 查看。
+本项目旨在为 [Vibe Music Client](https://github.com/Alex-LiSun/vibe-music-client) (客户端) 和 [Vibe Music Admin](https://github.com/Alex-LiSun/vibe-music-admin) (管理端) 提供后端支持。具体的 API 接口定义和使用方式，请参考项目源代码中的 Controller 层代码，或使用 API 文档工具 (如 Swagger，如果项目中集成了的话) 查看。
 
 ## 依赖服务说明 🔗
 
