@@ -133,6 +133,10 @@
 - `mvn spring-boot:run`: 启动 Spring Boot 应用 (用于开发)。
 - `java -jar target/*.jar`: 运行打包后的 JAR 文件。
 
+## 项目演示 📺
+
+视频地址：[https://www.bilibili.com/video/BV1tKJ8z8E6z/]
+
 ## API 文档 接口
 
 本项目旨在为 [Vibe Music Client](https://github.com/Alex-LiSun/vibe-music-client) (客户端) 和 [Vibe Music Admin](https://github.com/Alex-LiSun/vibe-music-admin) (管理端) 提供后端支持。具体的 API 接口定义和使用方式，请参考项目源代码中的 Controller 层代码，或使用 API 文档工具 (如 Swagger，如果项目中集成了的话) 查看。
