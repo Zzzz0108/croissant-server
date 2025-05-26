@@ -48,6 +48,14 @@
 
 - [GitHub 代码仓库](https://github.com/Alex-LiSun/vibe-music-server.git)
 
+## 文件下载 📥
+
+本项目包含的所有文件，均已通过MinIO存储桶的形式进行分享，并提供百度网盘的下载链接。
+- vibe-music-data: [https://pan.baidu.com/s/15QpgfTPEIxY0GgpIiKdywg?pwd=1234] (提取码: `1234`)
+
+![vibe-music-data](https://github.com/Alex-LiSun/vibe-music-server/blob/main/img/vibe-music-data.png)
+![vibe-music-data](https://github.com/Alex-LiSun/vibe-music-server/blob/main/img/vibe-music-data-songs.png)
+
 ## 安装与启动 🚀
 
 1.  **克隆项目**
