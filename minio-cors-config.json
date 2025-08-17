@@ -1,0 +1,10 @@
+{
+  "cors": {
+    "enabled": true,
+    "allowedOrigins": ["*"],
+    "allowedMethods": ["GET", "POST", "PUT", "DELETE", "HEAD"],
+    "allowedHeaders": ["*"],
+    "exposeHeaders": ["ETag", "Content-Length", "Content-Type"],
+    "maxAgeSeconds": 3600
+  }
+} 

@@ -21,9 +21,13 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
+
+    private static final Logger log = LoggerFactory.getLogger(LoginInterceptor.class);
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -82,22 +86,28 @@ public class LoginInterceptor implements HandlerInterceptor {
             String redisToken = operations.get(token);
             if (redisToken == null) {
                 // token失效
+                log.warn("❌ Token失效 - token: {}", token);
                 throw new RuntimeException();
             }
 
             Map<String, Object> claims = JwtUtil.parseToken(token);
             String role = (String) claims.get(JwtClaimsConstant.ROLE);
             String requestURI = request.getRequestURI();
+            
+            log.info("🔐 权限验证 - 角色: {}, 请求路径: {}, Token: {}", role, requestURI, token.substring(0, Math.min(20, token.length())) + "...");
 
             if (rolePermissionManager.hasPermission(role, requestURI)) {
                 // 把业务数据存储到ThreadLocal中
                 ThreadLocalUtil.set(claims);
+                log.info("✅ 权限验证通过 - 用户 {} 可以访问 {}", role, requestURI);
                 return true;
             } else {
+                log.warn("❌ 权限验证失败 - 用户 {} 无法访问 {}", role, requestURI);
                 sendErrorResponse(response, 403, MessageConstant.NO_PERMISSION); // 无权限访问
                 return false;
             }
         } catch (Exception e) {
+            log.error("❌ Token验证异常: {}", e.getMessage(), e);
             sendErrorResponse(response, 401, MessageConstant.SESSION_EXPIRED); // 令牌无效
             return false;
         }

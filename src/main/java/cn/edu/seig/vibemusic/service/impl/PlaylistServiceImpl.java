@@ -20,6 +20,7 @@ import cn.edu.seig.vibemusic.service.IPlaylistService;
 import cn.edu.seig.vibemusic.service.MinioService;
 import cn.edu.seig.vibemusic.util.JwtUtil;
 import cn.edu.seig.vibemusic.util.TypeConversionUtil;
+import cn.edu.seig.vibemusic.util.UrlCleanupUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -87,6 +88,10 @@ public class PlaylistServiceImpl extends ServiceImpl<PlaylistMapper, Playlist> i
                 .map(playlist -> {
                     PlaylistVO playlistVO = new PlaylistVO();
                     BeanUtils.copyProperties(playlist, playlistVO);
+                    // 清理封面URL，移除"-blob"后缀
+                    if (playlistVO.getCoverUrl() != null) {
+                        playlistVO.setCoverUrl(UrlCleanupUtil.cleanupImageUrl(playlistVO.getCoverUrl()));
+                    }
                     return playlistVO;
                 }).toList();
 

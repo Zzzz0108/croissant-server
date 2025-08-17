@@ -25,6 +25,7 @@ import cn.edu.seig.vibemusic.service.ISongService;
 import cn.edu.seig.vibemusic.service.MinioService;
 import cn.edu.seig.vibemusic.util.JwtUtil;
 import cn.edu.seig.vibemusic.util.TypeConversionUtil;
+import cn.edu.seig.vibemusic.util.UrlCleanupUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -95,9 +96,15 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
             return Result.success(MessageConstant.DATA_NOT_FOUND, new PageResult<>(0L, null));
         }
 
-        // 设置默认状态
+        // 设置默认状态并清理图片URL
         List<SongVO> songVOList = songPage.getRecords().stream()
-                .peek(songVO -> songVO.setLikeStatus(LikeStatusEnum.DEFAULT.getId()))
+                .peek(songVO -> {
+                    songVO.setLikeStatus(LikeStatusEnum.DEFAULT.getId());
+                    // 清理封面URL，移除"-blob"后缀
+                    if (songVO.getCoverUrl() != null) {
+                        songVO.setCoverUrl(UrlCleanupUtil.cleanupImageUrl(songVO.getCoverUrl()));
+                    }
+                })
                 .toList();
 
         // 如果 token 解析成功且用户为登录状态，进一步操作
@@ -222,6 +229,13 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
             }
         }
 
+        // 清理所有推荐歌曲的封面URL，移除"-blob"后缀
+        recommendedSongs.forEach(song -> {
+            if (song.getCoverUrl() != null) {
+                song.setCoverUrl(UrlCleanupUtil.cleanupImageUrl(song.getCoverUrl()));
+            }
+        });
+
         return Result.success(recommendedSongs);
     }
 
@@ -264,6 +278,11 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
                     songDetailVO.setLikeStatus(LikeStatusEnum.LIKE.getId());
                 }
             }
+        }
+
+        // 清理封面URL，移除"-blob"后缀
+        if (songDetailVO.getCoverUrl() != null) {
+            songDetailVO.setCoverUrl(UrlCleanupUtil.cleanupImageUrl(songDetailVO.getCoverUrl()));
         }
 
         return Result.success(songDetailVO);

@@ -21,6 +21,7 @@ import cn.edu.seig.vibemusic.service.IArtistService;
 import cn.edu.seig.vibemusic.service.MinioService;
 import cn.edu.seig.vibemusic.util.JwtUtil;
 import cn.edu.seig.vibemusic.util.TypeConversionUtil;
+import cn.edu.seig.vibemusic.util.UrlCleanupUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -90,6 +91,10 @@ public class ArtistServiceImpl extends ServiceImpl<ArtistMapper, Artist> impleme
                 .map(artist -> {
                     ArtistVO artistVO = new ArtistVO();
                     BeanUtils.copyProperties(artist, artistVO);
+                    // 清理图片URL，移除"-blob"后缀
+                    if (artistVO.getAvatar() != null) {
+                        artistVO.setAvatar(UrlCleanupUtil.cleanupImageUrl(artistVO.getAvatar()));
+                    }
                     return artistVO;
                 }).toList();
 
@@ -174,6 +179,10 @@ public class ArtistServiceImpl extends ServiceImpl<ArtistMapper, Artist> impleme
                 .map(artist -> {
                     ArtistVO artistVO = new ArtistVO();
                     BeanUtils.copyProperties(artist, artistVO);
+                    // 清理图片URL，移除"-blob"后缀
+                    if (artistVO.getAvatar() != null) {
+                        artistVO.setAvatar(UrlCleanupUtil.cleanupImageUrl(artistVO.getAvatar()));
+                    }
                     return artistVO;
                 }).toList();
 
@@ -233,6 +242,11 @@ public class ArtistServiceImpl extends ServiceImpl<ArtistMapper, Artist> impleme
             }
         }
 
+        // 清理图片URL，移除"-blob"后缀
+        if (artistDetailVO.getAvatar() != null) {
+            artistDetailVO.setAvatar(UrlCleanupUtil.cleanupImageUrl(artistDetailVO.getAvatar()));
+        }
+        
         // 设置歌曲列表
         artistDetailVO.setSongs(songVOList);
 

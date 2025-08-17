@@ -79,5 +79,5 @@ role-path-permissions:
 minio:
   endpoint: http://localhost:9000 # 本地开发用 localhost，生产环境替换为 IP/域名
   accessKey: admin
-  secretKey: au38d@j!9P
+  secretKey: 12345678
   bucket: croissant

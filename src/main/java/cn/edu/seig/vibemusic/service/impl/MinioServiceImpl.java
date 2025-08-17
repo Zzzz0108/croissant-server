@@ -37,8 +37,22 @@ public class MinioServiceImpl implements MinioService {
     @Override
     public String uploadFile(MultipartFile file, String folder) {
         try {
-            // 生成唯一文件名
-            String fileName = folder + "/" + UUID.randomUUID() + "-" + file.getOriginalFilename();
+            // 获取原始文件名并处理
+            String originalFilename = file.getOriginalFilename();
+            String fileExtension = "";
+            
+            // 提取文件扩展名
+            if (originalFilename != null && originalFilename.contains(".")) {
+                fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            }
+            
+            // 移除"-blob"后缀（如果存在）
+            if (originalFilename != null && originalFilename.contains("-blob")) {
+                originalFilename = originalFilename.replace("-blob", "");
+            }
+            
+            // 生成唯一文件名，确保扩展名正确
+            String fileName = folder + "/" + UUID.randomUUID() + fileExtension;
 
             // 获取文件流
             InputStream inputStream = file.getInputStream();
